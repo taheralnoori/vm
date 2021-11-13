@@ -1,33 +1,4 @@
-<?php 
 
-ob_start();
-$API_KEY = "591686392:AAE5dlTvOw8mZqGv30vZIcg_LNHPmq7EPS0"; 
-
-define('API_KEY',$API_KEY);
-function bot($method,$datas=[]){
-    $url = "https://api.telegram.org/bot".API_KEY."/".$method;
-    $ch = curl_init();
-    curl_setopt($ch,CURLOPT_URL,$url);
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-    curl_setopt($ch,CURLOPT_POSTFIELDS,$datas);
-    $res = curl_exec($ch);
-    if(curl_error($ch)){
-        var_dump(curl_error($ch));
-    }else{
-        return json_decode($res);
-    }
-}
-$update = json_decode(file_get_contents('php://input'));
-$message = $update->message;
-$chat_id = $message->chat->id;
-$text = $message->text; 
-$admin = 612393384;
-$data = $update->callback_query->data;
-$chat_id2 = $update->callback_query->message->chat->id;
-$message_id2 = $update->callback_query->message->message_id;
-
-$name = $message->from->first_name;
-$username = $message->from->username;
 
 $u = explode("\n",file_get_contents("data/memb.txt"));
 $c = count($u)-1;
@@ -71,7 +42,7 @@ if ($text == "/start" and strpos($abood, '"status":"left"') != TRUE){
 كـ مثال :: سورة الفاتحه
 
 مطور 💡:- @Ailnoor 💡",
-        'reply_markup'=>json_encode([
+        'reply_markup'=>json_encode(
             'inline_keyboard'=>[
             [['text'=>"تـابع جـديدنـا ⛽️",'url'=>"https://telegram.me/php_i"]],
             [['text'=>"لـ ارائكم هنا 🥀",'url'=>"https://telegram.me/alsaed_ali_bot"]],
@@ -80,7 +51,7 @@ if ($text == "/start" and strpos($abood, '"status":"left"') != TRUE){
         ])
         ]);
 }
-$about = file_get_contents("data/about.txt");
+$about = file_get_contents("data/about.txt")
 
 $admin = 612393384; // your id ;
 if($text == "alsaedn" or $text == "/helpailnoor" and $chat_id == $admin){
@@ -738,7 +709,7 @@ bot( sendaudio ,[
  audio =>"https://t.me/bot_qran/145",
  reply_to_message_id =>$message->message_id, 
 ]);
-}
+
 
 if($text == "سورة الملك" or $text == "سوره الملك"){
 bot( sendaudio ,[
